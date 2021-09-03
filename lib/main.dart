@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_pro/carousel_pro.dart';
 
+import 'package:ecommerce/components/horizontal_listview.dart';
+import 'package:ecommerce/components/products.dart';
+
 void main() {
   runApp(MaterialApp(debugShowCheckedModeBanner: false, home: HomePage()));
 }
@@ -13,19 +16,23 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    Widget image_carousel = new Container(
+    Widget imageCarousel = new Container(
         height: 200.0,
         child: new Carousel(
           boxFit: BoxFit.cover,
           images: [
             AssetImage('images/c1.jpg'),
             AssetImage('images/m1.jpeg'),
-            AssetImage('images/m2.jpeg'),
             AssetImage('images/w1.jpeg'),
             AssetImage('images/w3.jpeg'),
             AssetImage('images/w4.jpeg'),
           ],
-          autoplay: false,
+          autoplay: true,
+          animationCurve: Curves.fastOutSlowIn,
+          animationDuration: Duration(milliseconds: 1000),
+          dotSize: 4.0,
+          indicatorBgPadding: 5.0,
+          dotBgColor: Color.fromARGB(0, 0, 0, 0),
         ));
 
     return Scaffold(
@@ -41,10 +48,12 @@ class _HomePageState extends State<HomePage> {
               onPressed: null)
         ],
       ),
+
+      //DRAWER WIDGET
       drawer: new Drawer(
           child: new ListView(
         children: <Widget>[
-          //header
+          //DRAWER HEADER
           new UserAccountsDrawerHeader(
             accountName: Text('Swamim Saikia'),
             accountEmail: Text('swamim@mail.com'),
@@ -118,6 +127,32 @@ class _HomePageState extends State<HomePage> {
           )
         ],
       )),
+
+      //LIST VIEW WIDGET
+      body: new ListView(
+        children: <Widget>[
+          //IMAGE CAROUSEL HERE
+          imageCarousel,
+          //PADDING WIDGET
+          new Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: new Text('Catagories'),
+          ),
+
+          //HORIZONTAL LIST VIEW HERE
+          HorizontalList(),
+
+          new Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: new Text('Recent Products'),
+          ),
+
+          Container(
+            height: 320,
+            child: Products(),
+          )
+        ],
+      ),
     );
   }
 }
